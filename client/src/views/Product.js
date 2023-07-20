@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 
 
 const Product = () => {
@@ -21,7 +20,10 @@ const Product = () => {
   
   const handleDelete = (id) => {
     axios.delete(`http://localhost:8000/api/products/${id}`)
-        .then(res=>{fetchProduct()})
+        .then(res=>{
+          fetchProduct()
+          navigator('/products')
+        })
         .catch(err=>console.log(err))
 }
 

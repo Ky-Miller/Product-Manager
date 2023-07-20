@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const ProductList = () => {
 
     const [products, setProducts] = useState([])
+    const navigator = useNavigate()
 
     const fetchProducts = () => {
         axios.get("http://localhost:8000/api/products")
             .then(res=>{setProducts(res.data)})
-            
             .catch(err=>console.log(err))
     }
 
@@ -17,7 +17,10 @@ const ProductList = () => {
 
     const handleDelete = (id) => {
         axios.delete(`http://localhost:8000/api/products/${id}`)
-            .then(res=>{fetchProducts()})
+            .then(res=>{
+                fetchProducts()
+                navigator('/products')
+            })
             .catch(err=>console.log(err))
     }
 
